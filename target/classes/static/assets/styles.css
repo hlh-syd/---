@@ -930,8 +930,13 @@ select:focus-visible {
 .sidebar,
 .right-rail {
     display: grid;
-    gap: 20px;
+    gap: 12px;
     align-self: start;
+}
+
+.sidebar {
+    width: 91%;
+    min-width: 255px;
 }
 
 .sidebar-logout-button {
@@ -2365,6 +2370,7 @@ body {
     grid-template-columns: minmax(220px, 1fr) minmax(280px, 420px);
     gap: 12px;
     align-items: center;
+    position: sticky;
 }
 
 .topbar.is-collapsed .topbar-center {
@@ -2379,9 +2385,10 @@ body {
 }
 
 .topbar.is-collapsed .topbar-metrics {
-    grid-template-columns: repeat(2, minmax(132px, 1fr));
-    gap: 10px;
-    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: auto;
 }
 
 .topbar.is-collapsed #brand-name,
@@ -2397,6 +2404,25 @@ body {
     border: 0;
     background: transparent;
     box-shadow: none;
+}
+
+.topbar.is-collapsed .usage-chip {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    z-index: 2;
+}
+
+.topbar.is-collapsed .usage-chip strong {
+    margin: 0;
+    text-align: center;
+    font-size: 1.94rem;
+    line-height: 1;
 }
 
 .topbar.is-collapsed .topbar-button-row {
@@ -2503,6 +2529,17 @@ body {
     width: 100%;
 }
 
+.topbar:not(.is-collapsed) .topbar-metrics {
+    grid-template-columns: auto;
+    width: auto;
+    max-width: none;
+    justify-self: end;
+}
+
+.topbar:not(.is-collapsed) .topbar-actions {
+    justify-items: end;
+}
+
 .usage-chip,
 .topbar-status {
     min-height: 58px;
@@ -2530,6 +2567,13 @@ body {
     gap: 12px;
     padding: 12px 14px;
     background: #f7f8fa;
+}
+
+.topbar:not(.is-collapsed) .usage-chip,
+.topbar:not(.is-collapsed) .topbar-status {
+    display: grid;
+    opacity: 1;
+    visibility: visible;
 }
 
 .status-dot {
@@ -2575,11 +2619,12 @@ body {
     padding: 6px;
     min-height: 52px;
     justify-content: flex-start;
-    background: #f7f8fa;
-    border: 1px solid #e5e6eb;
+    background: transparent;
+    border: 0;
     border-radius: 16px;
     overflow-x: auto;
     scrollbar-width: none;
+    box-shadow: none;
 }
 
 .top-nav::-webkit-scrollbar {
@@ -2591,7 +2636,7 @@ body {
     min-height: 40px;
     padding: 0 16px;
     border-radius: 12px;
-    font-size: 0.94rem;
+    font-size: 1.41rem;
     font-weight: 600;
     color: var(--text-sub);
 }
@@ -2600,10 +2645,55 @@ body {
     background: rgba(22, 93, 255, 0.08);
 }
 
+.top-nav .nav-label {
+    color: #165dff;
+    background: linear-gradient(90deg, #165dff 0%, #5b8cff 22%, #36cfc9 45%, #f759ab 68%, #722ed1 84%, #165dff 100%);
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    animation: topNavLabelFlow 3.8s ease-in-out infinite alternate, topNavLabelHue 8s linear infinite;
+}
+
 .top-nav button.is-active {
     background: #e8f3ff !important;
     color: var(--primary) !important;
     box-shadow: none !important;
+}
+
+.top-nav button.is-active .nav-label {
+    background-size: 260% 100%;
+}
+
+@keyframes topNavLabelFlow {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 100% 50%;
+    }
+}
+
+@keyframes topNavLabelHue {
+    0% {
+        filter: hue-rotate(0deg) saturate(1);
+    }
+    50% {
+        filter: hue-rotate(20deg) saturate(1.1);
+    }
+    100% {
+        filter: hue-rotate(0deg) saturate(1);
+    }
+}
+
+@supports not ((-webkit-background-clip: text) or (background-clip: text)) {
+    .top-nav .nav-label {
+        background: none;
+        color: #165dff;
+        -webkit-text-fill-color: initial;
+        animation: none;
+    }
 }
 
 .workspace {
@@ -2640,6 +2730,30 @@ body {
 .profile-card {
     align-items: stretch;
     gap: 12px;
+}
+
+.sidebar .profile-card {
+    width: 100%;
+    min-width: 0;
+    padding: 10px 12px;
+    gap: 8px;
+}
+
+.sidebar .side-card {
+    width: 100%;
+    min-width: 0;
+    padding: 10px 12px;
+}
+
+.sidebar .side-card h3 {
+    margin: 0 0 6px;
+    font-size: 1rem;
+}
+
+.sidebar .side-card p {
+    margin: 0;
+    font-size: 0.84rem;
+    line-height: 1.55;
 }
 
 .profile-card h2 {
