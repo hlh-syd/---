@@ -2851,7 +2851,15 @@ function syncFloatingWallVisibility() {
 function renderFloatingCardWall() {
   const stack = document.getElementById("floating-card-stack");
   if (!stack) return;
-  stack.innerHTML = state.plan.floatingCards.map((type) => buildFloatingCardMarkup(type)).join("");
+  const total = state.plan.floatingCards.length;
+  stack.innerHTML = state.plan.floatingCards
+    .map((type, index) =>
+      buildFloatingCardMarkup(type).replace(
+        /<article class="([^"]*floating-feature-card[^"]*)"/,
+        `<article class="$1" style="--stack-index:${index};--stack-depth:${total};"`
+      )
+    )
+    .join("");
   syncFloatingWallVisibility();
   syncFloatingTimerCardState();
 }

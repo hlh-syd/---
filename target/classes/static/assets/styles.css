@@ -2014,18 +2014,24 @@ button.primary-button.compact:active,
 /* Floating card wall overrides */
 .floating-timer {
     align-items: stretch;
-    gap: 10px;
-    width: min(208px, calc(100vw - 32px));
+    gap: 12px;
+    width: min(260px, calc(100vw - 32px));
     min-width: 0;
     top: 148px;
     bottom: 24px;
-    justify-content: flex-end;
+    justify-content: flex-start;
     max-height: calc(100dvh - 172px);
-    padding: 0;
+    padding: 10px 6px 8px;
+    border-radius: 28px;
     border: 0;
-    background: transparent;
-    backdrop-filter: none;
-    box-shadow: none;
+    background:
+        radial-gradient(circle at 18% 12%, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0) 46%),
+        linear-gradient(165deg, rgba(10, 18, 30, 0.86), rgba(23, 33, 54, 0.78) 52%, rgba(12, 20, 36, 0.84) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    backdrop-filter: blur(18px) saturate(130%);
+    box-shadow:
+        0 18px 38px rgba(8, 14, 28, 0.44),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
     pointer-events: none;
 }
 
@@ -2042,50 +2048,55 @@ button.primary-button.compact:active,
 }
 
 .floating-card-stack {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+    position: relative;
+    display: block;
+    min-height: 420px;
     max-height: 100%;
-    overflow-y: auto;
-    padding: 10px 0;
+    overflow: visible;
+    padding: 8px;
     pointer-events: auto;
-    scrollbar-width: thin;
-    -webkit-mask-image: linear-gradient(
-        to bottom,
-        transparent 0%,
-        #000 8%,
-        #000 92%,
-        transparent 100%
-    );
-    mask-image: linear-gradient(
-        to bottom,
-        transparent 0%,
-        #000 8%,
-        #000 92%,
-        transparent 100%
-    );
 }
 
 .floating-feature-card {
     --floating-accent: rgba(77, 107, 255, 0.16);
+    --stack-step: calc(var(--stack-index, 0) * 16px);
     pointer-events: auto;
+    position: absolute;
+    inset: auto 0 0 0;
+    z-index: calc(30 - var(--stack-index, 0));
     display: flex;
     flex-direction: column;
     gap: 12px;
-    min-height: 148px;
+    min-height: 172px;
     padding: 16px;
-    border-radius: 24px;
+    border-radius: 22px;
     background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(245, 248, 252, 0.84));
-    border: 1px solid rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(24px) saturate(160%);
+        linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(241, 247, 255, 0.82));
+    border: 1px solid rgba(255, 255, 255, 0.76);
+    backdrop-filter: blur(16px) saturate(140%);
     box-shadow:
-        0 24px 48px rgba(15, 23, 42, 0.14),
-        0 8px 20px rgba(15, 23, 42, 0.08),
+        0 24px 40px rgba(8, 14, 28, 0.3),
+        0 10px 18px rgba(8, 14, 28, 0.18),
         inset 0 1px 0 rgba(255, 255, 255, 0.92);
     animation: floatingTimerIn 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
-    position: relative;
     overflow: hidden;
+    transform-origin: center top;
+    transform:
+        translate3d(var(--stack-step), calc(var(--stack-index, 0) * 62px), 0)
+        rotate(calc((var(--stack-index, 0) - 1.5) * 0.9deg))
+        scale(calc(1 - (var(--stack-index, 0) * 0.022)));
+    transition: transform 260ms ease, box-shadow 260ms ease;
+}
+
+.floating-feature-card:hover {
+    transform:
+        translate3d(calc(var(--stack-step) + 4px), calc(var(--stack-index, 0) * 62px - 6px), 0)
+        rotate(calc((var(--stack-index, 0) - 1.5) * 0.6deg))
+        scale(calc(1 - (var(--stack-index, 0) * 0.018)));
+    box-shadow:
+        0 28px 46px rgba(8, 14, 28, 0.34),
+        0 12px 20px rgba(8, 14, 28, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.95);
 }
 
 .floating-feature-card::before {
@@ -2234,6 +2245,18 @@ button.primary-button.compact:active,
         width: auto;
         max-height: min(70dvh, calc(100dvh - 32px));
     }
+
+    .floating-card-stack {
+        min-height: 300px;
+    }
+
+    .floating-feature-card {
+        --stack-step: calc(var(--stack-index, 0) * 10px);
+        transform:
+            translate3d(var(--stack-step), calc(var(--stack-index, 0) * 54px), 0)
+            rotate(calc((var(--stack-index, 0) - 1.5) * 0.6deg))
+            scale(calc(1 - (var(--stack-index, 0) * 0.018)));
+    }
 }
 
 /* Arco-inspired workspace refresh */
@@ -2331,12 +2354,53 @@ body {
 }
 
 .topbar.is-collapsed {
-    min-height: auto;
-    padding: 18px 20px;
-    border-radius: 24px;
+    min-height: 72px;
+    width: 100%;
+    min-width: 0;
+    padding: 10px 16px;
+    border-radius: 999px;
     transform: none;
     background: rgba(255, 255, 255, 0.96);
     box-shadow: 0 18px 38px rgba(29, 33, 41, 0.08);
+    grid-template-columns: minmax(220px, 1fr) minmax(280px, 420px);
+    gap: 12px;
+    align-items: center;
+}
+
+.topbar.is-collapsed .topbar-center {
+    display: none;
+}
+
+.topbar.is-collapsed .topbar-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+}
+
+.topbar.is-collapsed .topbar-metrics {
+    grid-template-columns: repeat(2, minmax(132px, 1fr));
+    gap: 10px;
+    width: 100%;
+}
+
+.topbar.is-collapsed #brand-name,
+.topbar.is-collapsed .usage-chip span,
+.topbar.is-collapsed .status-label {
+    display: none;
+}
+
+.topbar.is-collapsed .usage-chip,
+.topbar.is-collapsed .topbar-status {
+    min-height: auto;
+    padding: 4px 8px;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+.topbar.is-collapsed .topbar-button-row {
+    display: none;
 }
 
 .topbar.is-collapsed .brand-mark-shell {
@@ -2348,13 +2412,24 @@ body {
 .topbar.is-collapsed .brand-copy p,
 .topbar.is-collapsed .topbar-context,
 .topbar.is-collapsed .status-label,
-.topbar.is-collapsed .topbar-button-row,
-.topbar.is-collapsed .top-nav {
+.topbar.is-collapsed .topbar-button-row {
     max-height: none;
     opacity: 1;
     pointer-events: auto;
     transform: none;
     overflow: visible;
+}
+
+.topbar.is-collapsed .top-nav {
+    max-height: 0;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate3d(0, -6px, 0);
+    overflow: hidden;
+    padding-top: 0;
+    padding-bottom: 0;
+    border-width: 0;
+    min-height: 0;
 }
 
 .topbar:not(.is-collapsed) .top-nav {
