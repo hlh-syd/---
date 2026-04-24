@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Workbench</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<div id="floating-timer" class="floating-timer hidden" role="region" aria-label="Floating quick cards">
+    <div id="floating-card-toast" class="floating-card-toast hidden" role="status" aria-live="polite"></div>
+    <div id="floating-card-stack" class="floating-card-stack"></div>
+</div>
+<div class="shell">
+    <div class="background-grid"></div>
+    <div class="ambient-orbs" id="ambient-orbs" aria-hidden="true">
+        <span class="ambient-orb orb-orange" data-orb-zone="left-top"></span>
+        <span class="ambient-orb orb-blue" data-orb-zone="right-top"></span>
+        <span class="ambient-orb orb-green" data-orb-zone="left-bottom"></span>
+        <span class="ambient-orb orb-violet" data-orb-zone="right-bottom"></span>
+        <span class="ambient-orb orb-pink" data-orb-zone="center-top"></span>
+        <span class="ambient-orb orb-deepblue" data-orb-zone="center-bottom"></span>
+    </div>
+    <div class="topbar-sentinel" id="topbar-sentinel" aria-hidden="true"></div>
+    <header class="topbar glass-panel">
+        <div class="brand-block">
+            <div class="brand-mark-shell">
+                <img class="brand-mark" src="/favicon.svg" alt="Research Workbench logo">
+            </div>
+            <div class="brand-copy">
+                <span class="brand-kicker">Research workspace</span>
+                <strong id="brand-name">Research Workbench</strong>
+                <p id="brand-tagline">Discovery, knowledge capture, AI generation and focused execution in one place.</p>
+            </div>
+        </div>
+        <div class="topbar-center">
+            <div class="topbar-context">
+                <span class="context-kicker">Current focus</span>
+                <p id="topbar-context-copy">Research-first workspace for daily planning and execution.</p>
+            </div>
+            <nav class="top-nav" id="top-nav" aria-label="Global module navigation"></nav>
+        </div>
+        <div class="topbar-actions">
+            <div class="topbar-metrics">
+                <div class="usage-chip">
+                    <span>Today</span>
+                    <strong id="topbar-usage-value">00:00</strong>
+                </div>
+                <div class="topbar-status">
+                    <span class="status-dot" aria-hidden="true"></span>
+                    <div class="status-copy">
+                        <span class="status-label">Current module</span>
+                        <strong id="topbar-status-value">Overview</strong>
+                    </div>
+                </div>
+            </div>
+            <div class="topbar-button-row">
+                <button class="primary-button compact" data-quick-jump="research" type="button">开始调研</button>
+                <button class="ghost-button compact" id="logout-button" type="button">退出登录</button>
+            </div>
+        </div>
+    </header>
+    <div id="status-banner" class="glass-panel status-banner hidden"></div>
+
+    <main class="workspace" id="main-content" tabindex="-1">
+        <aside class="sidebar">
+            <section class="profile-card glass-panel">
+                <div class="avatar-ring" id="sidebar-avatar-ring">
+                    <img id="sidebar-avatar-image" src="" alt="Profile avatar">
+                    <span id="sidebar-avatar-fallback">LAB</span>
+                </div>
+                <h2 id="sidebar-user">实验室研究者</h2>
+                <p id="sidebar-role">硕士研究生 / 生信方向</p>
+                <div class="sidebar-tags" id="sidebar-tags"></div>
+            </section>
+
+            <section class="side-nav glass-panel">
+                <div class="section-header">
+                    <h3>模块导航</h3>
+                    <span>Nav</span>
+                </div>
+                <nav id="module-nav" class="module-nav" aria-label="Sidebar module navigation"></nav>
+            </section>
+
+            <section class="side-card glass-panel">
+                <h3>今日推进原则</h3>
+                <p>先明确研究问题，再沉淀证据、入库知识和生成结论，不把高价值资料留在浏览器历史里。</p>
+            </section>
+            <button class="ghost-button sidebar-logout-button hidden" id="sidebar-logout-button" type="button">退出登录</button>
+        </aside>
+
+        <section class="main-stage">
+            <section class="hero-panel glass-panel" id="hero-panel">
+                <div class="hero-copy">
+                    <div class="hero-kicker-row">
+                        <span class="eyebrow">Arco-aligned research cockpit</span>
+                        <span class="hero-date" id="hero-date"></span>
+                    </div>
+                    <h1 id="hero-title">从研究问题到成果沉淀的一体化工作台</h1>
+                    <p id="hero-summary"></p>
+                    <div class="hero-chips" id="hero-chips"></div>
+                    <div class="hero-actions">
+                        <button class="primary-button" data-quick-jump="research" type="button">发起学术调研</button>
+                        <button class="secondary-button" data-quick-jump="knowledge" type="button">进入知识库</button>
+                    </div>
+                </div>
+                <div class="hero-metrics" id="hero-metrics"></div>
+            </section>
+
+            <section class="module-stage" id="module-stage">
+                <div class="loading-state glass-panel">正在加载工作台数据...</div>
+            </section>
+        </section>
+
+        <aside class="right-rail">
+            <section class="spotlight-card glass-panel">
+                <div class="section-header">
+                    <h3>今日洞察</h3>
+                </div>
+                <div id="spotlight-panel" class="spotlight-panel"></div>
+            </section>
+
+            <section class="activity-card glass-panel">
+                <div class="section-header">
+                    <h3>最近动态</h3>
+                    <span>Flow</span>
+                </div>
+                <div id="activity-list" class="activity-list"></div>
+            </section>
+
+            <section class="source-card glass-panel">
+                <div class="section-header">
+                    <h3>来源资料</h3>
+                    <span>Refs</span>
+                </div>
+                <div id="source-list" class="source-list"></div>
+            </section>
+        </aside>
+    </main>
+</div>
+
+<div id="picker-modal" class="modal-backdrop hidden">
+    <div class="modal-card glass-panel">
+        <div class="section-header">
+            <h3 id="picker-title">选择知识库</h3>
+            <button id="picker-close" class="ghost-button" type="button">关闭</button>
+        </div>
+        <p id="picker-subtitle" class="meta-line">请选择一个目标知识库。</p>
+        <div id="picker-list" class="list-stack"></div>
+    </div>
+</div>
+
+<div id="mindmap-modal" class="modal-backdrop hidden">
+    <div class="modal-card glass-panel">
+        <div class="section-header">
+            <h3>思维导图预览</h3>
+            <button id="mindmap-close" class="ghost-button" type="button">关闭</button>
+        </div>
+        <div id="mindmap-modal-content" class="mindmap-panel"></div>
+    </div>
+</div>
+
+<template id="metric-template">
+    <article class="metric-card">
+        <span class="metric-label"></span>
+        <strong class="metric-value"></strong>
+        <small class="metric-detail"></small>
+    </article>
+</template>
+
+<script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({ startOnLoad: false, theme: "default", securityLevel: "loose" });
+    window.mermaid = mermaid;
+</script>
+<script src="/assets/app.js"></script>
+</body>
+</html>

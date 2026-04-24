@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>数字信息实验室 - 研究工作台</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg-0: #f5f8ff;
+        --bg-1: #eef4ff;
+        --text-0: #18233d;
+        --text-1: #5e6e92;
+        --line: rgba(107, 129, 184, 0.18);
+        --glass: rgba(255, 255, 255, 0.8);
+        --primary: #496cff;
+        --primary-2: #3ec5e7;
+        --shadow: 0 24px 64px rgba(72, 93, 148, 0.18);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Outfit", "PingFang SC", "Microsoft YaHei", sans-serif;
+        color: var(--text-0);
+        background:
+          radial-gradient(circle at 15% 10%, rgba(85, 108, 255, 0.2), transparent 42%),
+          radial-gradient(circle at 80% 20%, rgba(66, 201, 231, 0.16), transparent 40%),
+          linear-gradient(180deg, #f9fbff 0%, #f4f8ff 100%);
+      }
+
+      main {
+        overflow-x: hidden;
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .container {
+        width: min(1280px, 92vw);
+        margin: 0 auto;
+      }
+
+      .glass {
+        background: var(--glass);
+        border: 1px solid var(--line);
+        backdrop-filter: blur(16px);
+        box-shadow: var(--shadow);
+      }
+
+      .top-nav {
+        position: sticky;
+        top: 14px;
+        z-index: 20;
+        margin: 18px auto 0;
+        width: min(1220px, 92vw);
+        border-radius: 999px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 14px 10px 24px;
+      }
+
+      .logo-wrap {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .logo {
+        width: 38px;
+        height: 38px;
+        border-radius: 12px;
+        object-fit: cover;
+      }
+
+      .logo-text {
+        font-weight: 700;
+        letter-spacing: 0.02em;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: var(--text-1);
+        font-weight: 500;
+        padding: 9px 14px;
+        border-radius: 999px;
+      }
+
+      .nav-links a:hover {
+        color: var(--text-0);
+        background: rgba(255, 255, 255, 0.9);
+      }
+
+      .nav-cta {
+        border: 0;
+        border-radius: 999px;
+        color: #fff;
+        font-weight: 600;
+        background: linear-gradient(120deg, var(--primary), var(--primary-2));
+        padding: 11px 18px;
+        cursor: pointer;
+      }
+
+      section {
+        padding: 8rem 0;
+      }
+
+      .hero {
+        padding-top: 10rem;
+      }
+
+      .hero-panel {
+        border-radius: 34px;
+        min-height: 74vh;
+        padding: 4.8rem 2rem;
+        position: relative;
+        overflow: hidden;
+        isolation: isolate;
+      }
+
+      .hero-panel::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(to top, rgba(16, 28, 54, 0.56), rgba(16, 28, 54, 0.36)),
+          url("https://picsum.photos/seed/research-lab-cloud/1920/1080") center / cover no-repeat;
+        z-index: -2;
+        filter: contrast(1.15) saturate(0.95);
+      }
+
+      .hero-panel::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at center, transparent 10%, rgba(6, 11, 24, 0.45) 100%);
+        z-index: -1;
+      }
+
+      .hero-content {
+        max-width: 80rem;
+        margin: 0 auto;
+        text-align: center;
+        color: #f2f7ff;
+      }
+
+      .hero-content h1 {
+        margin: 0 auto;
+        max-width: 72rem;
+        font-size: clamp(2.8rem, 5vw, 5.4rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+      }
+
+      .hero-content p {
+        max-width: 58rem;
+        margin: 1.6rem auto 2.4rem;
+        line-height: 1.75;
+        font-size: 1.15rem;
+        color: rgba(233, 242, 255, 0.92);
+      }
+
+      .hero-actions {
+        display: flex;
+        justify-content: center;
+        gap: 14px;
+        flex-wrap: wrap;
+      }
+
+      .hero-actions button {
+        min-width: 170px;
+        border-radius: 999px;
+        border: 1px solid transparent;
+        font-weight: 600;
+        cursor: pointer;
+        padding: 14px 24px;
+      }
+
+      .hero-actions .btn-primary {
+        color: #ffffff;
+        background: linear-gradient(130deg, #5782ff, #4ee0f7);
+      }
+
+      .hero-actions .btn-light {
+        color: #17233d;
+        background: #ffffff;
+      }
+
+      .section-title {
+        margin: 0 0 2rem;
+        font-size: clamp(2rem, 3.5vw, 3rem);
+        letter-spacing: -0.02em;
+      }
+
+      .section-desc {
+        margin: 0 0 2.6rem;
+        color: var(--text-1);
+        max-width: 760px;
+        line-height: 1.8;
+      }
+
+      .bento-grid {
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        grid-auto-rows: minmax(160px, auto);
+        grid-auto-flow: dense;
+        gap: 16px;
+      }
+
+      .card {
+        border-radius: 24px;
+        padding: 24px;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .card h3 {
+        margin: 0 0 12px;
+        font-size: 1.2rem;
+      }
+
+      .card p {
+        margin: 0;
+        line-height: 1.7;
+        color: var(--text-1);
+      }
+
+      .col-7 {
+        grid-column: span 7;
+      }
+      .col-5 {
+        grid-column: span 5;
+      }
+      .col-4 {
+        grid-column: span 4;
+      }
+      .col-8 {
+        grid-column: span 8;
+      }
+
+      .media-card {
+        min-height: 320px;
+        color: #edf3ff;
+      }
+
+      .media-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(to top, rgba(12, 19, 34, 0.72), rgba(12, 19, 34, 0.2)),
+          url("https://picsum.photos/seed/paper-graph-flow/1280/900") center / cover no-repeat;
+        z-index: -1;
+      }
+
+      .module-list {
+        display: grid;
+        gap: 9px;
+        margin-top: 16px;
+      }
+
+      .module-item {
+        border: 1px solid rgba(120, 141, 189, 0.2);
+        border-radius: 14px;
+        padding: 10px 12px;
+        background: rgba(255, 255, 255, 0.68);
+        color: #304263;
+      }
+
+      .desire-wrap {
+        display: grid;
+        grid-template-columns: 0.9fr 1.1fr;
+        gap: 28px;
+      }
+
+      .pin-title {
+        border-radius: 28px;
+        padding: 32px;
+        position: relative;
+      }
+
+      .pin-title h2 {
+        margin: 0;
+        font-size: clamp(2.2rem, 4.2vw, 3.4rem);
+      }
+
+      .pin-title p {
+        color: var(--text-1);
+        line-height: 1.8;
+      }
+
+      .story-list {
+        display: grid;
+        gap: 20px;
+      }
+
+      .story-card {
+        border-radius: 20px;
+        min-height: 260px;
+        padding: 20px;
+        color: #eff4ff;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .story-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background-size: cover;
+        background-position: center;
+        filter: grayscale(0.2) contrast(1.2);
+      }
+
+      .story-card:nth-child(1)::before {
+        background-image:
+          linear-gradient(rgba(16, 27, 48, 0.56), rgba(16, 27, 48, 0.76)),
+          url("https://picsum.photos/seed/knowledge-map/1200/900");
+      }
+
+      .story-card:nth-child(2)::before {
+        background-image:
+          linear-gradient(rgba(16, 27, 48, 0.52), rgba(16, 27, 48, 0.78)),
+          url("https://picsum.photos/seed/research-summary/1200/900");
+      }
+
+      .story-card:nth-child(3)::before {
+        background-image:
+          linear-gradient(rgba(16, 27, 48, 0.56), rgba(16, 27, 48, 0.78)),
+          url("https://picsum.photos/seed/focus-plan/1200/900");
+      }
+
+      .scrub-copy {
+        margin-top: 28px;
+        border-radius: 20px;
+        padding: 28px;
+        line-height: 2;
+        color: #314769;
+      }
+
+      .scrub-word {
+        opacity: 0.14;
+      }
+
+      .action-panel {
+        border-radius: 32px;
+        padding: 3rem 2rem;
+        text-align: center;
+        color: #eff4ff;
+        background:
+          linear-gradient(125deg, rgba(46, 71, 154, 0.94), rgba(37, 147, 187, 0.9)),
+          url("https://picsum.photos/seed/action-lab/1400/800") center / cover no-repeat;
+      }
+
+      .action-panel h2 {
+        margin: 0;
+        font-size: clamp(2rem, 3.4vw, 3rem);
+      }
+
+      .action-panel p {
+        margin: 1rem auto 1.8rem;
+        max-width: 780px;
+        line-height: 1.8;
+      }
+
+      .footer-links {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .footer-links a {
+        text-decoration: none;
+        color: #f2f6ff;
+        border: 1px solid rgba(228, 238, 255, 0.3);
+        padding: 10px 14px;
+        border-radius: 999px;
+      }
+
+      .interactive {
+        transition: transform 0.7s ease, box-shadow 0.7s ease;
+      }
+
+      .interactive:hover {
+        transform: translateY(-6px) scale(1.02);
+        box-shadow: 0 22px 52px rgba(69, 94, 153, 0.25);
+      }
+
+      @media (max-width: 1080px) {
+        .nav-links {
+          display: none;
+        }
+
+        .desire-wrap {
+          grid-template-columns: 1fr;
+        }
+
+        .col-7,
+        .col-5,
+        .col-4,
+        .col-8 {
+          grid-column: span 12;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <nav class="top-nav glass">
+        <div class="logo-wrap">
+          <img class="logo" src="./logo.png" alt="实验室 Logo" />
+          <div class="logo-text">数字信息实验室</div>
+        </div>
+        <div class="nav-links">
+          <a href="#">学术调研</a>
+          <a href="#">知识库</a>
+          <a href="#">网页搜索</a>
+          <a href="#">AI 服务</a>
+          <a href="#">研究计划</a>
+          <a href="#">个人主页</a>
+        </div>
+        <button class="nav-cta">进入工作台</button>
+      </nav>
+
+      <section class="hero">
+        <div class="container">
+          <div class="hero-panel glass">
+            <div class="hero-content">
+              <h1>把文献检索、知识沉淀和研究计划放进同一个连续工作流</h1>
+              <p>
+                面向研究生与科研团队的数字研究工作台，围绕真实任务路径组织能力：先搜索，后理解，再沉淀，最终转化为可执行计划与可复用产出。
+              </p>
+              <div class="hero-actions">
+                <button class="btn-primary">开始研究问题检索</button>
+                <button class="btn-light">查看今日计划板</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="container">
+          <h2 class="section-title">Interest · 致密但清晰的模块工作区</h2>
+          <p class="section-desc">
+            六大能力模块以高密度卡片组织，同时保持学术阅读节奏。每个模块既可独立完成任务，也能一键衔接到知识库与研究计划，形成闭环。
+          </p>
+          <div class="bento-grid">
+            <article class="card glass col-7 media-card interactive">
+              <h3>学术调研中枢</h3>
+              <p>支持论文搜索、思维导图、快速总结、历史查询与一键入库。</p>
+            </article>
+            <article class="card glass col-5 interactive">
+              <h3>知识库管理</h3>
+              <p>文件夹增删改命名、文档上传与批量清理、问答与总结统一在同一操作面板。</p>
+              <div class="module-list">
+                <div class="module-item">引用回溯与命中片段预览</div>
+                <div class="module-item">知识库搜索与二次产出</div>
+                <div class="module-item">从搜索结果直接入库</div>
+              </div>
+            </article>
+            <article class="card glass col-4 interactive">
+              <h3>网页搜索</h3>
+              <p>聚合抖音、小红书与网页结果，自动生成 Markdown 摘要并支持保存。</p>
+            </article>
+            <article class="card glass col-8 interactive">
+              <h3>AI 助手工作台</h3>
+              <p>
+                将提示词优化、Bio 医学助手、知识库问答与网页总结整合为可切换助手组，并保留来源资料、变量模板与历史版本。
+              </p>
+            </article>
+            <article class="card glass col-5 interactive">
+              <h3>研究计划</h3>
+              <p>番茄钟、任务清单、日历、打卡联动，研究动作可被追踪与复盘。</p>
+            </article>
+            <article class="card glass col-7 interactive">
+              <h3>个人研究画像</h3>
+              <p>统一管理项目、收藏、产出和活跃主题，形成长期研究资产视图。</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="container desire-wrap">
+          <div class="pin-title glass" id="pinTitle">
+            <h2>Desire · 从结果到洞察的滚动叙事</h2>
+            <p>
+              左侧固定洞察标题，右侧滚动展示研究过程中的关键阶段。每个阶段都以来源、总结、计划转化三要素组织，避免“看完即丢”的信息断层。
+            </p>
+            <div class="scrub-copy glass" id="scrubText">
+              <span class="scrub-word">先提问，</span>
+              <span class="scrub-word">再检索，</span>
+              <span class="scrub-word">再证据对齐，</span>
+              <span class="scrub-word">然后沉淀，</span>
+              <span class="scrub-word">最终转化为</span>
+              <span class="scrub-word">可执行研究计划。</span>
+            </div>
+          </div>
+          <div class="story-list">
+            <article class="story-card interactive">
+              <h3>阶段一：检索与筛选</h3>
+              <p>根据研究问题而非关键词组织查询，并通过年份、方法、来源建立高质量候选池。</p>
+            </article>
+            <article class="story-card interactive">
+              <h3>阶段二：总结与关联</h3>
+              <p>在文献、网页与知识库间建立主题关系图，输出结构化摘要与建议追问方向。</p>
+            </article>
+            <article class="story-card interactive">
+              <h3>阶段三：执行与复盘</h3>
+              <p>将 AI 输出直接生成为任务项，结合番茄钟、日历与打卡形成可量化研究节奏。</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="container">
+          <div class="action-panel">
+            <h2>Action · 今天就把研究链路跑通</h2>
+            <p>
+              以研究问题为起点，将文献检索、知识积累、AI 生成与行动计划收敛到一个统一界面。你不需要在多个工具之间反复切换，系统会把每一次探索沉淀为可复用资产。
+            </p>
+            <div class="footer-links">
+              <a href="#">新建研究项目</a>
+              <a href="#">导入已有知识库</a>
+              <a href="#">开启专注计时</a>
+              <a href="#">查看最近成果</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+    <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
+    <script>
+      gsap.registerPlugin(ScrollTrigger);
+
+      gsap.to("#pinTitle", {
+        y: 0,
+        scrollTrigger: {
+          trigger: ".desire-wrap",
+          start: "top top+=110",
+          end: "bottom bottom-=80",
+          pin: true,
+          scrub: true
+        }
+      });
+
+      gsap.utils.toArray(".story-card").forEach((card, index) => {
+        gsap.fromTo(
+          card,
+          { scale: 0.82, opacity: 0.24, y: 90 },
+          {
+            scale: 1,
+            opacity: 1,
+            y: 0,
+            duration: 0.9,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 82%",
+              end: "bottom 28%",
+              scrub: true
+            },
+            delay: index * 0.04
+          }
+        );
+      });
+
+      const words = gsap.utils.toArray(".scrub-word");
+      gsap.to(words, {
+        opacity: 1,
+        stagger: 0.22,
+        ease: "none",
+        scrollTrigger: {
+          trigger: "#scrubText",
+          start: "top 82%",
+          end: "bottom 18%",
+          scrub: true
+        }
+      });
+    </script>
+  </body>
+</html>

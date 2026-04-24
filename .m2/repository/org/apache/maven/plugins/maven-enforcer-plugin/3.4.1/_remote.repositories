@@ -1,0 +1,6 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Wed Apr 22 20:03:55 CST 2026
+maven-enforcer-plugin-3.4.1.jar>central=
+maven-enforcer-plugin-3.4.1.pom>central=
+maven-enforcer-plugin-3.4.1.jar>com-230=
+maven-enforcer-plugin-3.4.1.pom>com-230=

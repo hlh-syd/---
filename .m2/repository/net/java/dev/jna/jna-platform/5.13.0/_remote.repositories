@@ -1,0 +1,6 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Wed Apr 22 20:20:18 CST 2026
+jna-platform-5.13.0.jar>central=
+jna-platform-5.13.0.jar>com-230=
+jna-platform-5.13.0.pom>com-230=
+jna-platform-5.13.0.pom>central=

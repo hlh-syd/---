@@ -1,0 +1,6 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Wed Apr 22 20:04:30 CST 2026
+kotlin-stdlib-jdk8-1.9.20.jar>central=
+kotlin-stdlib-jdk8-1.9.20.jar>com-230=
+kotlin-stdlib-jdk8-1.9.20.pom>com-230=
+kotlin-stdlib-jdk8-1.9.20.pom>central=

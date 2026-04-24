@@ -1,0 +1,41 @@
+Standard Commons Logging discovery in action with spring-jcl: please remove commons-logging.jar from classpath in order to avoid potential conflicts
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.0)
+
+2026-04-22T20:24:32.818+08:00  INFO 4664 --- [research-workbench] [           main] c.r.w.ResearchWorkbenchApplication       : Starting ResearchWorkbenchApplication v1.0.0 using Java 17.0.16 with PID 4664 (E:\AI\研究牲\target\research-workbench-1.0.0.jar started by he in E:\AI\研究牲)
+2026-04-22T20:24:32.826+08:00  INFO 4664 --- [research-workbench] [           main] c.r.w.ResearchWorkbenchApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-04-22T20:24:33.966+08:00  INFO 4664 --- [research-workbench] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-04-22T20:24:33.972+08:00  INFO 4664 --- [research-workbench] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-22T20:24:34.169+08:00  INFO 4664 --- [research-workbench] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 185 ms. Found 20 JPA repository interfaces.
+2026-04-22T20:24:35.363+08:00  INFO 4664 --- [research-workbench] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 5000 (http)
+2026-04-22T20:24:35.400+08:00  INFO 4664 --- [research-workbench] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-04-22T20:24:35.403+08:00  INFO 4664 --- [research-workbench] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.16]
+2026-04-22T20:24:35.540+08:00  INFO 4664 --- [research-workbench] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-04-22T20:24:35.544+08:00  INFO 4664 --- [research-workbench] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2617 ms
+Standard Commons Logging discovery in action with spring-jcl: please remove commons-logging.jar from classpath in order to avoid potential conflicts
+2026-04-22T20:24:35.641+08:00  INFO 4664 --- [research-workbench] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-04-22T20:24:36.306+08:00  INFO 4664 --- [research-workbench] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@762bf32d
+2026-04-22T20:24:36.311+08:00  INFO 4664 --- [research-workbench] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-04-22T20:24:36.326+08:00  INFO 4664 --- [research-workbench] [           main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3306/research_workbench'
+2026-04-22T20:24:36.701+08:00  INFO 4664 --- [research-workbench] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-22T20:24:36.915+08:00  INFO 4664 --- [research-workbench] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.3.1.Final
+2026-04-22T20:24:37.013+08:00  INFO 4664 --- [research-workbench] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-04-22T20:24:37.460+08:00  INFO 4664 --- [research-workbench] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-22T20:24:37.534+08:00  WARN 4664 --- [research-workbench] [           main] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-22T20:24:38.734+08:00  INFO 4664 --- [research-workbench] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-22T20:24:38.793+08:00  INFO 4664 --- [research-workbench] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-22T20:24:41.098+08:00  INFO 4664 --- [research-workbench] [           main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [static/index.html]
+2026-04-22T20:24:41.443+08:00  INFO 4664 --- [research-workbench] [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@7bd4f212, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@4daee083, org.springframework.security.web.context.SecurityContextHolderFilter@53b5356, org.springframework.security.web.header.HeaderWriterFilter@6c152246, org.springframework.web.filter.CorsFilter@7da70124, org.springframework.security.web.authentication.logout.LogoutFilter@1bb90d4d, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@16c559c7, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@32a7c583, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@7fdf32a4, org.springframework.security.web.access.ExceptionTranslationFilter@fc9313d, org.springframework.security.web.access.intercept.AuthorizationFilter@3a4181ba]
+2026-04-22T20:24:43.122+08:00  INFO 4664 --- [research-workbench] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 5000 (http) with context path ''
+2026-04-22T20:24:43.160+08:00  INFO 4664 --- [research-workbench] [           main] c.r.w.ResearchWorkbenchApplication       : Started ResearchWorkbenchApplication in 10.843 seconds (process running for 11.653)
+2026-04-22T20:25:02.413+08:00  INFO 4664 --- [research-workbench] [nio-5000-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-22T20:25:02.415+08:00  INFO 4664 --- [research-workbench] [nio-5000-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-04-22T20:25:02.417+08:00  INFO 4664 --- [research-workbench] [nio-5000-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-04-22T20:25:02.429+08:00  WARN 4664 --- [research-workbench] [nio-5000-exec-1] o.s.w.s.h.HandlerMappingIntrospector     : Cache miss for REQUEST dispatch to '/login.html' (previous null). Performing CorsConfiguration lookup. This is logged once only at WARN level, and every time at TRACE.
+2026-04-22T20:25:02.437+08:00  WARN 4664 --- [research-workbench] [nio-5000-exec-1] o.s.w.s.h.HandlerMappingIntrospector     : Cache miss for REQUEST dispatch to '/login.html' (previous null). Performing MatchableHandlerMapping lookup. This is logged once only at WARN level, and every time at TRACE.

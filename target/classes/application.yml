@@ -1,0 +1,103 @@
+server:
+  port: 5000
+  servlet:
+    context-path: /
+  tomcat:
+    max-swallow-size: -1
+    max-http-form-post-size: 900MB
+
+spring:
+  application:
+    name: research-workbench
+  datasource:
+    url: jdbc:mysql://localhost:3306/research_workbench
+    username: root
+    password: 192969
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    database-platform: ${DB_DIALECT:org.hibernate.dialect.MySQLDialect}
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+  data:
+    redis:
+      repositories:
+        enabled: false
+  cache:
+    type: simple
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  web:
+    resources:
+      static-locations: classpath:/static/
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 900MB
+      max-request-size: 900MB
+      file-size-threshold: 2KB
+  jackson:
+    time-zone: Asia/Shanghai
+    default-property-inclusion: non_null
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+cors:
+  allowed-origins: http://localhost:5173,http://localhost:3000,http://127.0.0.1:5173
+
+app:
+  file:
+    upload-dir: ${UPLOAD_DIR:${user.dir}/uploads}
+  external:
+    allow-fallback: true
+  oauth:
+    redirect-base-url: ${OAUTH_REDIRECT_BASE_URL:http://localhost:5000}
+    wechat:
+      enabled: ${WECHAT_OAUTH_ENABLED:false}
+      client-id: ${WECHAT_APP_ID:}
+      client-secret: ${WECHAT_APP_SECRET:}
+      authorize-url: ${WECHAT_AUTHORIZE_URL:https://open.weixin.qq.com/connect/qrconnect}
+      token-url: ${WECHAT_TOKEN_URL:https://api.weixin.qq.com/sns/oauth2/access_token}
+      user-info-url: ${WECHAT_USERINFO_URL:https://api.weixin.qq.com/sns/userinfo}
+      scope: ${WECHAT_SCOPE:snsapi_login}
+    feishu:
+      enabled: ${FEISHU_OAUTH_ENABLED:false}
+      client-id: ${FEISHU_APP_ID:}
+      client-secret: ${FEISHU_APP_SECRET:}
+      authorize-url: ${FEISHU_AUTHORIZE_URL:https://accounts.feishu.cn/open-apis/authen/v1/authorize}
+      token-url: ${FEISHU_TOKEN_URL:https://open.feishu.cn/open-apis/authen/v1/access_token}
+      user-info-url: ${FEISHU_USERINFO_URL:https://open.feishu.cn/open-apis/authen/v1/user_info}
+      scope: ${FEISHU_SCOPE:contact:user.base:readonly}
+  ai-assistant:
+    enabled: true
+    llm-provider: ${LLM_PROVIDER:alibaba}
+    openai:
+      api-key: ${OPENAI_API_KEY:}
+      base-url: ${OPENAI_BASE_URL:https://api.openai.com/v1}
+      model: ${OPENAI_MODEL:gpt-4o-mini}
+      temperature: 0.35
+      max-tokens: 2048
+    alibaba:
+      api-key: ${ALIBABA_API_KEY:}
+      base-url: ${ALIBABA_BASE_URL:https://dashscope.aliyuncs.com/compatible-mode/v1}
+      model: ${ALIBABA_MODEL:qwen-plus}
+      temperature: 0.35
+      max-tokens: 2048
+    metaso:
+      enabled: true
+      api-key: ${METASO_API_KEY:}
+      base-url: ${METASO_BASE_URL:https://metaso.cn/api/v1}
+      search-path: /search
+      scope: webpage
+      result-size: 8
+      concise: true

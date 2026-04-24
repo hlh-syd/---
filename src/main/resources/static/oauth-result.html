@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OAuth 结果</title>
+    <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+<div class="shell oauth-shell">
+    <section class="glass-panel oauth-card">
+        <div class="section-header">
+            <h2 id="oauth-title">OAuth 结果</h2>
+            <span id="oauth-platform">Auth</span>
+        </div>
+        <p id="oauth-message" class="section-subtext">正在解析授权状态...</p>
+        <div class="button-row spaced-top">
+            <a class="primary-button compact external-link" href="/">返回首页</a>
+            <button id="oauth-close" class="ghost-button" type="button">关闭页面</button>
+        </div>
+    </section>
+</div>
+<script>
+    const params = new URLSearchParams(window.location.search);
+    const status = params.get("status") || "unknown";
+    const platform = params.get("platform") || "oauth";
+    const message = params.get("message") || "未提供消息";
+    document.getElementById("oauth-platform").textContent = platform;
+    document.getElementById("oauth-title").textContent = status === "success" ? "授权成功" : "授权失败";
+    document.getElementById("oauth-message").textContent = decodeURIComponent(message);
+    document.getElementById("oauth-close").addEventListener("click", () => window.close());
+</script>
+</body>
+</html>
