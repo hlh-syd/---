@@ -1134,11 +1134,14 @@ function renderProfile() {
             <div class="profile-avatar-header">
               <img id="avatar-file-preview" class="avatar-file-preview hidden" src="" alt="头像预览">
               <div>
-                <p id="avatar-file-name" class="meta-line">未选择文件</p>
+                <p class="title-line">头像</p>
+                <p id="avatar-file-name" class="meta-line">上传图片更新头像</p>
               </div>
             </div>
-            <div class="button-row">
-              <button class="secondary-button compact" id="avatar-pick-button" type="button">上传头像</button>
+            <div class="avatar-upload-row">
+              <label class="secondary-button compact avatar-upload-button" for="profile-avatar-file">选择图片</label>
+              <input id="profile-avatar-file" class="visually-hidden" name="avatarFile" type="file" accept="image/*">
+              <input id="profile-avatar-url" name="avatarUrl" type="hidden" value="${escapeHtml(detail.avatarUrl || profile.user.avatarUrl || "")}">
             </div>
           </div>
           <div class="field-group">
@@ -1171,7 +1174,6 @@ function renderProfile() {
               <input id="profile-direction" class="compact-input" name="researchDirection" value="${escapeHtml(detail.researchDirection || "")}" placeholder="因果学习 / 生信">
             </div>
           </div>
-          <input id="avatar-file-input" type="file" accept="image/*" hidden>
           <div class="field-group">
             <label for="profile-bio">简介</label>
             <textarea id="profile-bio" name="bio" placeholder="介绍你的研究主题、方法和近期目标">${escapeHtml(profile.user.bio)}</textarea>
@@ -1210,6 +1212,7 @@ function renderProfile() {
       const departmentField = profileForm.elements.namedItem("department");
       const degreeLevelField = profileForm.elements.namedItem("degreeLevel");
       const researchDirectionField = profileForm.elements.namedItem("researchDirection");
+      const avatarUrlField = profileForm.elements.namedItem("avatarUrl");
       const bioTextArea = profileForm.elements.namedItem("bio");
 
       if (realNameField) realNameField.value = detail.realName ?? "";
@@ -1218,11 +1221,12 @@ function renderProfile() {
       if (departmentField) departmentField.value = detail.department || "";
       if (degreeLevelField) degreeLevelField.value = detail.degreeLevel || "";
       if (researchDirectionField) researchDirectionField.value = detail.researchDirection || "";
+      if (avatarUrlField) avatarUrlField.value = detail.avatarUrl || profile.user.avatarUrl || "";
       if (bioTextArea) bioTextArea.value = detail.bio || profile.user.bio || "";
       renderAvatarUploadPreview(detail.avatarUrl || profile.user.avatarUrl || "", "已保存头像");
     }
 
-    bindAvatarUpload(profileForm);
+    bindAvatarFileUpload(profileForm);
 
     document.getElementById("profile-form").addEventListener("submit", saveProfile);
     document.getElementById("profile-binding-form").addEventListener("submit", saveBinding);
@@ -2103,7 +2107,12 @@ async function saveProfile(event) {
   event.preventDefault();
   const formData = new FormData(event.currentTarget);
   const gender = normalizeGenderValue(formData.get("gender"));
-  const currentAvatarUrl = String(state.data?.profile?.detail?.avatarUrl || state.data?.profile?.user?.avatarUrl || "").trim();
+  const currentAvatarUrl = String(
+    formData.get("avatarUrl")
+      || state.data?.profile?.detail?.avatarUrl
+      || state.data?.profile?.user?.avatarUrl
+      || "",
+  ).trim();
   const payload = await fetchJson("/api/profile", {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
@@ -2152,49 +2161,69 @@ async function saveProfile(event) {
   window.alert("资料已保存");
 }
 
-function bindAvatarUpload(profileForm) {
+function bindAvatarFileUpload(profileForm) {
   if (!profileForm) {
     return;
   }
-  const pickButton = document.getElementById("avatar-pick-button");
-  const fileInput = document.getElementById("avatar-file-input");
-  const fileNameLabel = document.getElementById("avatar-file-name");
-  if (!pickButton || !fileInput || !fileNameLabel) {
+  const avatarFileInput = profileForm.elements.namedItem("avatarFile");
+  const avatarUrlInput = profileForm.elements.namedItem("avatarUrl");
+  if (!avatarFileInput || !avatarUrlInput) {
     return;
   }
 
-  pickButton.addEventListener("click", () => {
-    fileInput.click();
-  });
-
-  fileInput.addEventListener("change", async () => {
-    const file = fileInput.files?.[0];
+  avatarFileInput.addEventListener("change", async () => {
+    const file = avatarFileInput.files?.[0];
     if (!file) {
       return;
     }
-    fileNameLabel.textContent = `已选择：${file.name}`;
-    const formData = new FormData();
-    formData.append("file", file);
-    const payload = await fetchJson("/api/profile/avatar/upload", {
-      method: "POST",
-      body: formData,
-    });
-    const avatarUrl = String(payload?.data?.avatarUrl || "").trim();
-    if (!avatarUrl) {
-      window.alert("头像上传失败，请重试");
+    if (!file.type.startsWith("image/")) {
+      window.alert("请选择图片文件");
+      avatarFileInput.value = "";
       return;
     }
-    const displayName = String(profileForm.elements.namedItem("realName")?.value || state.data?.profile?.user?.name || "");
-    renderSidebarAvatar(avatarUrl, displayName);
-    renderAvatarUploadPreview(avatarUrl, `已选择：${file.name}`);
-    if (state.data?.profile) {
-      state.data.profile.detail = { ...(state.data.profile.detail || {}), avatarUrl };
-      if (state.data.profile.user) {
-        state.data.profile.user.avatarUrl = avatarUrl;
+
+    const localPreviewUrl = URL.createObjectURL(file);
+    renderAvatarUploadPreview(localPreviewUrl, `正在上传：${file.name}`);
+    const uploadData = new FormData();
+    uploadData.append("file", file);
+
+    try {
+      const payload = await fetchJson("/api/profile/avatar", {
+        method: "POST",
+        body: uploadData,
+      });
+      const avatarUrl = String(payload?.data?.avatarUrl || "").trim();
+      if (!avatarUrl) {
+        throw new Error("头像上传未返回地址");
       }
+      avatarUrlInput.value = avatarUrl;
+      updateProfileAvatarState(profileForm, avatarUrl);
+      renderAvatarUploadPreview(avatarUrl, `已上传：${file.name}`);
+    } catch (error) {
+      const fallbackAvatarUrl = String(
+        state.data?.profile?.detail?.avatarUrl || state.data?.profile?.user?.avatarUrl || "",
+      ).trim();
+      renderAvatarUploadPreview(fallbackAvatarUrl, "头像上传失败");
+    } finally {
+      URL.revokeObjectURL(localPreviewUrl);
+      avatarFileInput.value = "";
     }
-    window.alert("头像上传成功，点击“保存资料”后将同步所有资料项");
   });
+}
+
+function updateProfileAvatarState(profileForm, avatarUrl) {
+  const displayName = String(profileForm.elements.namedItem("realName")?.value || state.data?.profile?.user?.name || "");
+  const avatarUrlInput = profileForm.elements.namedItem("avatarUrl");
+  if (avatarUrlInput) {
+    avatarUrlInput.value = avatarUrl;
+  }
+  renderSidebarAvatar(avatarUrl, displayName);
+  if (state.data?.profile) {
+    state.data.profile.detail = { ...(state.data.profile.detail || {}), avatarUrl };
+    if (state.data.profile.user) {
+      state.data.profile.user.avatarUrl = avatarUrl;
+    }
+  }
 }
 
 function renderAvatarUploadPreview(avatarUrl, labelText) {
@@ -2212,7 +2241,7 @@ function renderAvatarUploadPreview(avatarUrl, labelText) {
     preview.removeAttribute("src");
     return;
   }
-  preview.src = safeUrl;
+  preview.src = buildAvatarImageUrl(safeUrl);
   preview.classList.remove("hidden");
   preview.onerror = () => {
     preview.classList.add("hidden");
@@ -2240,7 +2269,7 @@ function renderSidebarAvatar(avatarUrl, displayName) {
   const safeAvatarUrl = String(avatarUrl || "").trim();
   sidebarAvatarFallback.textContent = fallbackText;
   if (safeAvatarUrl) {
-    sidebarAvatarImage.src = safeAvatarUrl;
+    sidebarAvatarImage.src = buildAvatarImageUrl(safeAvatarUrl);
     sidebarAvatarImage.alt = `${safeName || "用户"}头像`;
     sidebarAvatarRing.classList.add("has-image");
     sidebarAvatarImage.onerror = () => {
@@ -2251,6 +2280,15 @@ function renderSidebarAvatar(avatarUrl, displayName) {
   }
   sidebarAvatarRing.classList.remove("has-image");
   sidebarAvatarImage.removeAttribute("src");
+}
+
+function buildAvatarImageUrl(avatarUrl) {
+  const safeUrl = String(avatarUrl || "").trim();
+  if (!safeUrl || !safeUrl.startsWith("/api/profile/avatar/")) {
+    return safeUrl;
+  }
+  const separator = safeUrl.includes("?") ? "&" : "?";
+  return `${safeUrl}${separator}v=${Date.now()}`;
 }
 
 async function saveBinding(event) {

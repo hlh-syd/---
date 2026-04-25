@@ -35,7 +35,7 @@ public class SysUser extends BaseAuditEntity {
     @Column(nullable = false, length = 64)
     private String nickname;
 
-    @Column(name = "avatar_url", length = 255)
+    @Column(name = "avatar_url", length = 1024)
     private String avatarUrl;
 
     @Column(nullable = false)

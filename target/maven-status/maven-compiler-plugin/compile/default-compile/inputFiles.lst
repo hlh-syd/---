@@ -1,85 +1,85 @@
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\controller\AuthController.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\service\ProfileFeatureService.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\repository\UserProfileRepository.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\controller\OAuthFeatureController.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\domain\KnowledgeChunk.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\domain\UserSocialBinding.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\repository\WebSearchResultRepository.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\domain\AiChatSession.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\service\KnowledgeFolderService.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\domain\UserDailyUsage.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\controller\WebFeatureController.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\controller\WorkbenchController.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\domain\UserProfile.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\service\KnowledgeRagService.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\service\ResearchFeatureService.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\repository\PaperSearchTaskRepository.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\bootstrap\DemoDataInitializer.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\domain\AiChatMessage.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\domain\CalendarEvent.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\config\SecurityConfig.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\service\RelaxFeatureService.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\domain\WebSearchTask.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\domain\KnowledgeFolder.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\domain\SearchHistorySession.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\domain\WebSearchResult.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\domain\PomodoroSessionLog.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\controller\StudyPlanController.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\domain\StudyTask.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\repository\UserSocialBindingRepository.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\domain\PaperSearchTask.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\repository\ResearchProjectRepository.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\service\CurrentUserService.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\service\WebFeatureService.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\repository\PaperSearchResultRepository.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\repository\PomodoroSessionLogRepository.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\controller\RelaxFeatureController.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\repository\UserDailyUsageRepository.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\repository\CalendarEventRepository.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\service\AiFeatureService.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\domain\KnowledgeDocument.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\service\KnowledgeConversationService.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\domain\PaperSearchResult.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\service\UserInitializationService.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\controller\KnowledgeBaseController.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\controller\ResearchFeatureController.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\repository\KnowledgeChunkRepository.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\repository\AiChatMessageRepository.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\repository\KnowledgeBaseRepository.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\repository\WebSearchTaskRepository.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\controller\KnowledgeFolderController.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\domain\SysUser.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\config\AppProperties.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\service\StudyPlanService.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\repository\PomodoroRecordRepository.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\domain\KnowledgeBase.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\domain\ResearchProject.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\repository\WorkspaceRepository.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\controller\AiFeatureController.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\domain\BaseAuditEntity.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\domain\CheckinRecord.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\repository\AiChatSessionRepository.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\controller\ProfileFeatureController.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\integration\MetaSoClient.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\service\OAuthFeatureService.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\domain\PomodoroRecord.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\repository\SysUserRepository.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\domain\Workspace.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\service\KnowledgeExtractionService.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\domain\SearchHistoryDetail.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\domain\WorkspaceArtifact.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\repository\KnowledgeFolderRepository.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\ResearchWorkbenchApplication.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\service\SearchHistoryService.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\repository\WorkspaceArtifactRepository.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\config\WebConfig.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\repository\CheckinRecordRepository.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\service\AuthService.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\repository\KnowledgeDocumentRepository.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\service\KnowledgeBaseService.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\integration\LlmChatClient.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\service\WorkbenchDataService.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\repository\SearchHistoryDetailRepository.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\controller\ApiResponse.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\repository\SearchHistorySessionRepository.java
-E:\AI\鐮旂┒鐗瞈src\main\java\com\research\workbench\repository\StudyTaskRepository.java
+E:\AI\研究牲\src\main\java\com\research\workbench\controller\AuthController.java
+E:\AI\研究牲\src\main\java\com\research\workbench\service\ProfileFeatureService.java
+E:\AI\研究牲\src\main\java\com\research\workbench\repository\UserProfileRepository.java
+E:\AI\研究牲\src\main\java\com\research\workbench\controller\OAuthFeatureController.java
+E:\AI\研究牲\src\main\java\com\research\workbench\domain\KnowledgeChunk.java
+E:\AI\研究牲\src\main\java\com\research\workbench\domain\UserSocialBinding.java
+E:\AI\研究牲\src\main\java\com\research\workbench\repository\WebSearchResultRepository.java
+E:\AI\研究牲\src\main\java\com\research\workbench\domain\AiChatSession.java
+E:\AI\研究牲\src\main\java\com\research\workbench\service\KnowledgeFolderService.java
+E:\AI\研究牲\src\main\java\com\research\workbench\domain\UserDailyUsage.java
+E:\AI\研究牲\src\main\java\com\research\workbench\controller\WebFeatureController.java
+E:\AI\研究牲\src\main\java\com\research\workbench\controller\WorkbenchController.java
+E:\AI\研究牲\src\main\java\com\research\workbench\domain\UserProfile.java
+E:\AI\研究牲\src\main\java\com\research\workbench\service\KnowledgeRagService.java
+E:\AI\研究牲\src\main\java\com\research\workbench\service\ResearchFeatureService.java
+E:\AI\研究牲\src\main\java\com\research\workbench\repository\PaperSearchTaskRepository.java
+E:\AI\研究牲\src\main\java\com\research\workbench\bootstrap\DemoDataInitializer.java
+E:\AI\研究牲\src\main\java\com\research\workbench\domain\AiChatMessage.java
+E:\AI\研究牲\src\main\java\com\research\workbench\domain\CalendarEvent.java
+E:\AI\研究牲\src\main\java\com\research\workbench\config\SecurityConfig.java
+E:\AI\研究牲\src\main\java\com\research\workbench\service\RelaxFeatureService.java
+E:\AI\研究牲\src\main\java\com\research\workbench\domain\WebSearchTask.java
+E:\AI\研究牲\src\main\java\com\research\workbench\domain\KnowledgeFolder.java
+E:\AI\研究牲\src\main\java\com\research\workbench\domain\SearchHistorySession.java
+E:\AI\研究牲\src\main\java\com\research\workbench\domain\WebSearchResult.java
+E:\AI\研究牲\src\main\java\com\research\workbench\domain\PomodoroSessionLog.java
+E:\AI\研究牲\src\main\java\com\research\workbench\controller\StudyPlanController.java
+E:\AI\研究牲\src\main\java\com\research\workbench\domain\StudyTask.java
+E:\AI\研究牲\src\main\java\com\research\workbench\repository\UserSocialBindingRepository.java
+E:\AI\研究牲\src\main\java\com\research\workbench\domain\PaperSearchTask.java
+E:\AI\研究牲\src\main\java\com\research\workbench\repository\ResearchProjectRepository.java
+E:\AI\研究牲\src\main\java\com\research\workbench\service\CurrentUserService.java
+E:\AI\研究牲\src\main\java\com\research\workbench\service\WebFeatureService.java
+E:\AI\研究牲\src\main\java\com\research\workbench\repository\PaperSearchResultRepository.java
+E:\AI\研究牲\src\main\java\com\research\workbench\repository\PomodoroSessionLogRepository.java
+E:\AI\研究牲\src\main\java\com\research\workbench\controller\RelaxFeatureController.java
+E:\AI\研究牲\src\main\java\com\research\workbench\repository\UserDailyUsageRepository.java
+E:\AI\研究牲\src\main\java\com\research\workbench\repository\CalendarEventRepository.java
+E:\AI\研究牲\src\main\java\com\research\workbench\service\AiFeatureService.java
+E:\AI\研究牲\src\main\java\com\research\workbench\domain\KnowledgeDocument.java
+E:\AI\研究牲\src\main\java\com\research\workbench\service\KnowledgeConversationService.java
+E:\AI\研究牲\src\main\java\com\research\workbench\domain\PaperSearchResult.java
+E:\AI\研究牲\src\main\java\com\research\workbench\service\UserInitializationService.java
+E:\AI\研究牲\src\main\java\com\research\workbench\controller\KnowledgeBaseController.java
+E:\AI\研究牲\src\main\java\com\research\workbench\controller\ResearchFeatureController.java
+E:\AI\研究牲\src\main\java\com\research\workbench\repository\KnowledgeChunkRepository.java
+E:\AI\研究牲\src\main\java\com\research\workbench\repository\AiChatMessageRepository.java
+E:\AI\研究牲\src\main\java\com\research\workbench\repository\KnowledgeBaseRepository.java
+E:\AI\研究牲\src\main\java\com\research\workbench\repository\WebSearchTaskRepository.java
+E:\AI\研究牲\src\main\java\com\research\workbench\controller\KnowledgeFolderController.java
+E:\AI\研究牲\src\main\java\com\research\workbench\domain\SysUser.java
+E:\AI\研究牲\src\main\java\com\research\workbench\config\AppProperties.java
+E:\AI\研究牲\src\main\java\com\research\workbench\service\StudyPlanService.java
+E:\AI\研究牲\src\main\java\com\research\workbench\repository\PomodoroRecordRepository.java
+E:\AI\研究牲\src\main\java\com\research\workbench\domain\KnowledgeBase.java
+E:\AI\研究牲\src\main\java\com\research\workbench\domain\ResearchProject.java
+E:\AI\研究牲\src\main\java\com\research\workbench\repository\WorkspaceRepository.java
+E:\AI\研究牲\src\main\java\com\research\workbench\controller\AiFeatureController.java
+E:\AI\研究牲\src\main\java\com\research\workbench\domain\BaseAuditEntity.java
+E:\AI\研究牲\src\main\java\com\research\workbench\domain\CheckinRecord.java
+E:\AI\研究牲\src\main\java\com\research\workbench\repository\AiChatSessionRepository.java
+E:\AI\研究牲\src\main\java\com\research\workbench\controller\ProfileFeatureController.java
+E:\AI\研究牲\src\main\java\com\research\workbench\integration\MetaSoClient.java
+E:\AI\研究牲\src\main\java\com\research\workbench\service\OAuthFeatureService.java
+E:\AI\研究牲\src\main\java\com\research\workbench\domain\PomodoroRecord.java
+E:\AI\研究牲\src\main\java\com\research\workbench\repository\SysUserRepository.java
+E:\AI\研究牲\src\main\java\com\research\workbench\domain\Workspace.java
+E:\AI\研究牲\src\main\java\com\research\workbench\service\KnowledgeExtractionService.java
+E:\AI\研究牲\src\main\java\com\research\workbench\domain\SearchHistoryDetail.java
+E:\AI\研究牲\src\main\java\com\research\workbench\domain\WorkspaceArtifact.java
+E:\AI\研究牲\src\main\java\com\research\workbench\repository\KnowledgeFolderRepository.java
+E:\AI\研究牲\src\main\java\com\research\workbench\ResearchWorkbenchApplication.java
+E:\AI\研究牲\src\main\java\com\research\workbench\service\SearchHistoryService.java
+E:\AI\研究牲\src\main\java\com\research\workbench\repository\WorkspaceArtifactRepository.java
+E:\AI\研究牲\src\main\java\com\research\workbench\config\WebConfig.java
+E:\AI\研究牲\src\main\java\com\research\workbench\repository\CheckinRecordRepository.java
+E:\AI\研究牲\src\main\java\com\research\workbench\service\AuthService.java
+E:\AI\研究牲\src\main\java\com\research\workbench\repository\KnowledgeDocumentRepository.java
+E:\AI\研究牲\src\main\java\com\research\workbench\service\KnowledgeBaseService.java
+E:\AI\研究牲\src\main\java\com\research\workbench\integration\LlmChatClient.java
+E:\AI\研究牲\src\main\java\com\research\workbench\service\WorkbenchDataService.java
+E:\AI\研究牲\src\main\java\com\research\workbench\repository\SearchHistoryDetailRepository.java
+E:\AI\研究牲\src\main\java\com\research\workbench\controller\ApiResponse.java
+E:\AI\研究牲\src\main\java\com\research\workbench\repository\SearchHistorySessionRepository.java
+E:\AI\研究牲\src\main\java\com\research\workbench\repository\StudyTaskRepository.java

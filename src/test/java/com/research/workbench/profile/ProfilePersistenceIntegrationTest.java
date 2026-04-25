@@ -12,12 +12,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -27,7 +30,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         "spring.datasource.username=sa",
         "spring.datasource.password=",
         "spring.jpa.database-platform=org.hibernate.dialect.H2Dialect",
-        "spring.jpa.hibernate.ddl-auto=create-drop"
+        "spring.jpa.hibernate.ddl-auto=create-drop",
+        "app.file.upload-dir=target/test-uploads/profile-persistence"
 })
 @AutoConfigureMockMvc
 @Transactional
@@ -85,7 +89,8 @@ class ProfilePersistenceIntegrationTest {
                                   "department": "Precision Medicine",
                                   "degreeLevel": "PhD",
                                   "researchDirection": "Cancer Biomarkers",
-                                  "bio": "Updated bio"
+                                  "bio": "Updated bio",
+                                  "avatarUrl": "https://cdn.example.com/avatars/alice.png"
                                 }
                                 """))
                 .andExpect(status().isOk())
@@ -93,7 +98,8 @@ class ProfilePersistenceIntegrationTest {
                 .andExpect(jsonPath("$.data.displayName").value("Alice Zhang"))
                 .andExpect(jsonPath("$.data.department").value("Precision Medicine"))
                 .andExpect(jsonPath("$.data.degreeLevel").value("PhD"))
-                .andExpect(jsonPath("$.data.researchDirection").value("Cancer Biomarkers"));
+                .andExpect(jsonPath("$.data.researchDirection").value("Cancer Biomarkers"))
+                .andExpect(jsonPath("$.data.avatarUrl").value("https://cdn.example.com/avatars/alice.png"));
 
         UserProfile savedProfile = userProfileRepository.findByUserId(user.getId()).orElseThrow();
         assertThat(savedProfile.getRealName()).isEqualTo("Alice Zhang");
@@ -102,13 +108,17 @@ class ProfilePersistenceIntegrationTest {
         assertThat(savedProfile.getDegreeLevel()).isEqualTo("PhD");
         assertThat(savedProfile.getResearchDirection()).isEqualTo("Cancer Biomarkers");
         assertThat(savedProfile.getBio()).isEqualTo("Updated bio");
+        SysUser savedUser = sysUserRepository.findById(user.getId()).orElseThrow();
+        assertThat(savedUser.getAvatarUrl()).isEqualTo("https://cdn.example.com/avatars/alice.png");
 
         mockMvc.perform(get("/api/workbench/bootstrap")
                         .with(user("alice").roles("USER")))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.profile.user.name").value("Alice Zhang"))
+                .andExpect(jsonPath("$.data.profile.user.avatarUrl").value("https://cdn.example.com/avatars/alice.png"))
                 .andExpect(jsonPath("$.data.profile.user.institution").value("New Institute"))
                 .andExpect(jsonPath("$.data.profile.detail.realName").value("Alice Zhang"))
+                .andExpect(jsonPath("$.data.profile.detail.avatarUrl").value("https://cdn.example.com/avatars/alice.png"))
                 .andExpect(jsonPath("$.data.profile.detail.department").value("Precision Medicine"))
                 .andExpect(jsonPath("$.data.profile.detail.degreeLevel").value("PhD"))
                 .andExpect(jsonPath("$.data.profile.detail.researchDirection").value("Cancer Biomarkers"));
@@ -141,5 +151,53 @@ class ProfilePersistenceIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.profile.user.name").value("Old Nickname"))
                 .andExpect(jsonPath("$.data.profile.detail.realName").value(""));
+    }
+
+    @Test
+    void avatarUploadStoresFileAndUpdatesCurrentUser() throws Exception {
+        byte[] imageBytes = new byte[] {
+                (byte) 0x89, 0x50, 0x4e, 0x47,
+                0x0d, 0x0a, 0x1a, 0x0a
+        };
+        MockMultipartFile avatar = new MockMultipartFile(
+                "file",
+                "alice-avatar.png",
+                MediaType.IMAGE_PNG_VALUE,
+                imageBytes
+        );
+
+        String response = mockMvc.perform(multipart("/api/profile/avatar")
+                        .file(avatar)
+                        .with(user("alice").roles("USER")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.avatarUrl").value(org.hamcrest.Matchers.startsWith("/api/profile/avatar/")))
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        SysUser savedUser = sysUserRepository.findById(user.getId()).orElseThrow();
+        assertThat(savedUser.getAvatarUrl()).startsWith("/api/profile/avatar/");
+
+        String avatarUrl = com.jayway.jsonpath.JsonPath.read(response, "$.data.avatarUrl");
+        mockMvc.perform(put("/api/profile")
+                        .with(user("alice").roles("USER"))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "realName": "Alice Zhang",
+                                  "avatarUrl": "%s"
+                                }
+                                """.formatted(avatarUrl)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.avatarUrl").value(avatarUrl));
+
+        SysUser savedAfterProfileUpdate = sysUserRepository.findById(user.getId()).orElseThrow();
+        assertThat(savedAfterProfileUpdate.getAvatarUrl()).isEqualTo(avatarUrl);
+
+        mockMvc.perform(get(avatarUrl)
+                        .with(user("alice").roles("USER")))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.IMAGE_PNG))
+                .andExpect(content().bytes(imageBytes));
     }
 }

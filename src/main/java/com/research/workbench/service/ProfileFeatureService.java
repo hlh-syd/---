@@ -1,15 +1,16 @@
 package com.research.workbench.service;
 
-import com.research.workbench.service.CurrentUserService;
+import com.research.workbench.config.AppProperties;
 import com.research.workbench.domain.SysUser;
 import com.research.workbench.domain.UserProfile;
 import com.research.workbench.domain.UserSocialBinding;
-import com.research.workbench.config.AppProperties;
 import com.research.workbench.repository.SysUserRepository;
 import com.research.workbench.repository.UserProfileRepository;
 import com.research.workbench.repository.UserSocialBindingRepository;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
@@ -21,6 +22,7 @@ import java.util.Optional;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.MediaType;
+import org.springframework.http.MediaTypeFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -79,7 +81,7 @@ public class ProfileFeatureService {
         profile.setResearchDirection(mergeText(request.researchDirection(), profile.getResearchDirection()));
         profile.setDegreeLevel(mergeText(request.degreeLevel(), profile.getDegreeLevel()));
         profile.setGender(mergeGender(request.gender(), profile.getGender()));
-        user.setAvatarUrl(mergeText(request.avatarUrl(), user.getAvatarUrl()));
+        user.setAvatarUrl(mergeAvatarUrl(request.avatarUrl(), user.getAvatarUrl()));
         userProfileRepository.save(profile);
         sysUserRepository.save(user);
         return profile();
@@ -125,10 +127,9 @@ public class ProfileFeatureService {
 
         Long userId = Objects.requireNonNull(currentUserService.requireCurrentUserId());
         SysUser user = sysUserRepository.findById(userId).orElseThrow();
-        String originalFilenameRaw = file.getOriginalFilename();
-        String originalFilename = sanitizeFilename(originalFilenameRaw);
+        String originalFilename = sanitizeFilename(file.getOriginalFilename());
         String extension = StringUtils.getFilenameExtension(originalFilename);
-        String safeExt = StringUtils.hasText(extension) ? Objects.requireNonNull(extension).toLowerCase(Locale.ROOT) : "png";
+        String safeExt = StringUtils.hasText(extension) ? extension.toLowerCase(Locale.ROOT) : "png";
         String storedName = System.currentTimeMillis() + "_" + userId + "." + safeExt;
         Path userAvatarDir = resolveUserAvatarDir(userId);
         Path targetPath = userAvatarDir.resolve(storedName).normalize();
@@ -149,27 +150,25 @@ public class ProfileFeatureService {
     public Optional<AvatarResource> readAvatar(String filename) {
         Long userId = Objects.requireNonNull(currentUserService.requireCurrentUserId());
         SysUser user = sysUserRepository.findById(userId).orElseThrow();
-        String currentAvatar = nullToEmpty(user.getAvatarUrl());
-        if (currentAvatar.isBlank() || !currentAvatar.endsWith("/" + filename)) {
-            return Optional.empty();
-        }
         String safeFilename = sanitizeFilename(filename);
         if (!StringUtils.hasText(safeFilename) || safeFilename.contains("..")) {
             return Optional.empty();
         }
 
-        Path avatarPath = resolveUserAvatarDir(userId).resolve(safeFilename).normalize();
-        if (!avatarPath.startsWith(resolveUserAvatarDir(userId))) {
+        String currentAvatar = nullToEmpty(user.getAvatarUrl());
+        if (currentAvatar.isBlank() || !currentAvatar.endsWith("/" + safeFilename)) {
             return Optional.empty();
         }
-        if (!Files.exists(avatarPath)) {
+
+        Path avatarDir = resolveUserAvatarDir(userId);
+        Path avatarPath = avatarDir.resolve(safeFilename).normalize();
+        if (!avatarPath.startsWith(avatarDir) || !Files.exists(avatarPath)) {
             return Optional.empty();
         }
 
         try {
             Resource resource = new UrlResource(avatarPath.toUri());
-            MediaType mediaType = detectMediaType(avatarPath);
-            return Optional.of(new AvatarResource(resource, mediaType));
+            return Optional.of(new AvatarResource(resource, detectMediaType(avatarPath)));
         } catch (MalformedURLException e) {
             return Optional.empty();
         }
@@ -192,6 +191,42 @@ public class ProfileFeatureService {
             return current;
         }
         return incoming.trim();
+    }
+
+    private String mergeAvatarUrl(String incoming, String current) {
+        if (incoming == null) {
+            return current;
+        }
+        String avatarUrl = incoming.trim();
+        if (avatarUrl.isBlank()) {
+            return "";
+        }
+        validateAvatarUrl(avatarUrl);
+        return avatarUrl;
+    }
+
+    private void validateAvatarUrl(String avatarUrl) {
+        if (avatarUrl.contains("\\") || avatarUrl.contains("..")) {
+            throw new IllegalArgumentException("头像 URL 不合法");
+        }
+        if (avatarUrl.startsWith("/api/profile/avatar/")) {
+            return;
+        }
+        try {
+            URI uri = new URI(avatarUrl);
+            if (uri.isAbsolute()) {
+                String scheme = uri.getScheme().toLowerCase(Locale.ROOT);
+                if (!"http".equals(scheme) && !"https".equals(scheme)) {
+                    throw new IllegalArgumentException("头像 URL 仅支持 http 或 https");
+                }
+                return;
+            }
+            if (!avatarUrl.startsWith("/")) {
+                throw new IllegalArgumentException("头像 URL 必须是 http(s) 地址或站内绝对路径");
+            }
+        } catch (URISyntaxException e) {
+            throw new IllegalArgumentException("头像 URL 不合法", e);
+        }
     }
 
     private Integer normalizeGender(Integer gender) {
@@ -219,11 +254,11 @@ public class ProfileFeatureService {
         try {
             String type = Files.probeContentType(path);
             if (type == null || type.isBlank()) {
-                return MediaType.APPLICATION_OCTET_STREAM;
+                return MediaTypeFactory.getMediaType(path.getFileName().toString()).orElse(MediaType.APPLICATION_OCTET_STREAM);
             }
             return MediaType.parseMediaType(type);
         } catch (IOException ignored) {
-            return MediaType.APPLICATION_OCTET_STREAM;
+            return MediaTypeFactory.getMediaType(path.getFileName().toString()).orElse(MediaType.APPLICATION_OCTET_STREAM);
         }
     }
 

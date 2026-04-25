@@ -198,3 +198,13 @@
   "mcp": "plugin-figma-figma",
   "promptword": "https://www.figma.com/community/file/1530623040881583111 ... 所有这种按钮改为这种效果"
 }
+
+-- he/Codex/2026-04-25 15:59:00
+{
+  "inputs": "用户反馈：个人中心传照片后无法保存也无法正确显示，要求实现本地图片上传后转 URL 保存，前端拿到 URL 后正确显示。",
+  "outputs": "修复文件：src/main/java/com/research/workbench/controller/ProfileFeatureController.java；src/main/java/com/research/workbench/service/ProfileFeatureService.java；src/main/resources/static/assets/app.js；src/main/resources/static/assets/styles.css；src/test/java/com/research/workbench/profile/ProfilePersistenceIntegrationTest.java；application.yml。验证：mvn -q -Dtest=ProfilePersistenceIntegrationTest test 通过；启动最新服务到 http://localhost:5001。",
+  "model": "GPT-5 Codex",
+  "skills": "frontend-design, Ai programming backup specification",
+  "mcp": "",
+  "promptword": "现在个人中心传照片后无法保存也无法正确显示!修复这个bug!思考如何用户上传本地图片，转url保存，前端拿到url可以正确显示！！实现这个功能！！"
+}
