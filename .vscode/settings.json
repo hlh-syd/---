@@ -1,8 +1,0 @@
-{
-    "java.compile.nullAnalysis.mode": "automatic",
-    "java.configuration.runtimes": [
-
-    ],
-    "java.configuration.detectJdksAtStart": true,
-    "java.configuration.updateBuildConfiguration": "interactive"
-}
