@@ -1,0 +1,17 @@
+/package.json
+/package-lock.json
+/tsconfig.app.json
+/tsconfig.json
+/tsconfig.node.json
+/.figma_refs/
+/.idea/
+/node_modules/
+node_modules
+backend/target
+backend/build.log
+backend/run-8090.log
+backend/run-8092.log
+backend/run-8092.err.log
+backend/run-8090.err.log
+backend/build-central.log
+/dist/
